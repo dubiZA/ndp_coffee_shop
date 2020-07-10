@@ -227,4 +227,4 @@ def auth_error(exception):
         'success': False,
         'error': exception.status_code,
         'message': exception.error
-    })
+    }), exception.status_code
