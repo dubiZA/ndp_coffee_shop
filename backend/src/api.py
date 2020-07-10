@@ -10,7 +10,6 @@ from .auth.auth import AuthError, requires_auth
 app = Flask(__name__)
 setup_db(app)
 CORS(app)
-
 '''
 uncomment the following line to initialize the datbase
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
@@ -26,6 +25,8 @@ GET /drinks
     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
+
+
 @app.route('/drinks')
 def get_drinks():
     drinks = Drink.query.all()
@@ -35,10 +36,7 @@ def get_drinks():
         drinks = [drink.short() for drink in drinks]
         print(drinks)
 
-        return jsonify({
-            'success': True,
-            'drinks': drinks
-        })
+        return jsonify({'success': True, 'drinks': drinks})
 
 
 '''
@@ -49,6 +47,7 @@ GET /drinks-detail
         or appropriate status code indicating reason for failure
 '''
 
+
 @app.route('/drinks-detail')
 @requires_auth(permission='get:drinks-detail')
 def get_drinks_detail(jwt):
@@ -58,10 +57,8 @@ def get_drinks_detail(jwt):
     else:
         drinks = [drink.long() for drink in drinks]
 
-        return jsonify({
-            'success': True,
-            'drinks': drinks
-        })
+        return jsonify({'success': True, 'drinks': drinks})
+
 
 '''
 POST /drinks
@@ -71,6 +68,8 @@ POST /drinks
     returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the newly created drink
         or appropriate status code indicating reason for failure
 '''
+
+
 @app.route('/drinks', methods=['POST'])
 @requires_auth(permission='post:drinks')
 def post_drinks(jwt):
@@ -89,16 +88,13 @@ def post_drinks(jwt):
 
         if not drink_long:
             abort(404)
-        
+
         drink_long = [drink_long.long()]
 
-        return jsonify({
-            'success': True,
-            'drink': drink_long
-        })
+        return jsonify({'success': True, 'drink': drink_long})
     except:
         abort(422)
-    
+
 
 '''
 PATCH /drinks/<id>
@@ -110,11 +106,13 @@ PATCH /drinks/<id>
     returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the updated drink
         or appropriate status code indicating reason for failure
 '''
+
+
 @app.route('/drinks/<int:drink_id>', methods=['PATCH'])
 @requires_auth(permission='patch:drinks')
 def patch_drink(jwt, drink_id):
     drink_details = request.get_json()
-    
+
     if 'title' in drink_details or 'recipe' in drink_details:
         drink_title = drink_details['title']
         drink_recipe = json.dumps(drink_details['recipe'])
@@ -132,14 +130,11 @@ def patch_drink(jwt, drink_id):
         drink_long = Drink.query.get(drink_id)
         drink_long = [drink_long.long()]
 
-        return jsonify({
-            'success': True,
-            'drink': drink_long
-        })
+        return jsonify({'success': True, 'drink': drink_long})
     except:
         abort(422)
 
-    
+
 '''
 DELETE /drinks/<id>
         where <id> is the existing model id
@@ -149,6 +144,8 @@ DELETE /drinks/<id>
     returns status code 200 and json {"success": True, "delete": id} where id is the id of the deleted record
         or appropriate status code indicating reason for failure
 '''
+
+
 @app.route('/drinks/<int:drink_id>', methods=['DELETE'])
 @requires_auth(permission='delete:drinks')
 def delete_drink(jwt, drink_id):
@@ -159,70 +156,71 @@ def delete_drink(jwt, drink_id):
     try:
         drink.delete()
 
-        return jsonify({
-            'success': True,
-            'delete': drink_id
-        })
+        return jsonify({'success': True, 'delete': drink_id})
     except:
         abort(422)
+
 
 ## Error Handling
 '''
 Example error handling for unprocessable entity
 '''
+
+
 @app.errorhandler(400)
 def bad_request(error):
     return jsonify({
-                    "success": False, 
-                    "error": 400,
-                    "message": "bad request"
-                    }), 400
+        "success": False,
+        "error": 400,
+        "message": "bad request"
+    }), 400
+
 
 @app.errorhandler(401)
 def unauthorized(error):
     return jsonify({
-                    "success": False, 
-                    "error": 401,
-                    "message": "unauthorized"
-                    }), 401
+        "success": False,
+        "error": 401,
+        "message": "unauthorized"
+    }), 401
+
 
 @app.errorhandler(403)
 def forbidden(error):
     return jsonify({
-                    "success": False, 
-                    "error": 403,
-                    "message": "forbidden"
-                    }), 403
+        "success": False,
+        "error": 403,
+        "message": "forbidden"
+    }), 403
+
 
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
-                    "success": False, 
-                    "error": 404,
-                    "message": "not found"
-                    }), 404
+        "success": False,
+        "error": 404,
+        "message": "not found"
+    }), 404
+
 
 @app.errorhandler(405)
 def not_allowed(error):
     return jsonify({
-                    "success": False, 
-                    "error": 405,
-                    "message": "method not allowed"
-                    }), 405
+        "success": False,
+        "error": 405,
+        "message": "method not allowed"
+    }), 405
+
 
 @app.errorhandler(422)
 def unprocessable(error):
     return jsonify({
-                    "success": False, 
-                    "error": 422,
-                    "message": "unprocessable"
-                    }), 422
+        "success": False,
+        "error": 422,
+        "message": "unprocessable"
+    }), 422
 
 
-'''
-@TODO implement error handler for AuthError
-    error handler should conform to general task above 
-'''
 @app.errorhandler(AuthError)
 def auth_error(exception):
     return jsonify({
