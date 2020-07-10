@@ -1,4 +1,4 @@
-# Coffee Shop Backend
+# Uda-Spice Latte Cafe Backend
 
 ## Getting Started
 
