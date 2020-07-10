@@ -15,12 +15,6 @@ You have been called on to demonstrate your newly learned skills to create a ful
 
 The da-Spice Latte Cafe Project API backend is written with PEP 8 as the style guide. Google's yapf formatter was used to format the code. For consistency, code contributions should be formatted using yapf before being merged. It can be installed with `pip install yapf` or view the [GitHub repo](https://github.com/google/yapf). Use the ```bash --stype pep8``` switch.
 
-## Tasks
-
-There are `@TODO` comments throughout the project. We recommend tackling the sections in order. Start by reading the READMEs in:
-
-1. [`./backend/`](./backend/README.md)
-2. [`./frontend/`](./frontend/README.md)
 
 ## Getting Started
 
