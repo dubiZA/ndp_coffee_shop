@@ -54,6 +54,7 @@ def get_drinks():
 @app.route('/drinks-details')
 def get_drinks_detail():
     drinks = Drink.query.all()
+    print(drinks)
     if not drinks:
         abort(404)
     else:
@@ -78,12 +79,30 @@ def get_drinks_detail():
 def post_drinks():
     drink_details = request.get_json()
 
-    if 'title' not in drink_details and 'recipe' not in drink_details:
+    if 'title' not in drink_details or 'recipe' not in drink_details:
         abort(422)
-    
-    return jsonify({
-        'success': True
-    })
+
+    drink_title = drink_details['title']
+    drink_recipe = drink_details['recipe']
+
+    try:
+        new_drink = Drink(title=drink_title, recipe=json.dumps(drink_recipe))
+
+        new_drink.insert()
+
+        drink_long = Drink.query.filter_by(title=drink_title).one_or_none()
+
+        if not drink_long:
+            abort(404)
+        
+        drink_long = [drink_long.long()]
+
+        return jsonify({
+            'success': True,
+            'drink': drink_long
+        })
+    except:
+        abort(422)
     
 
 '''
@@ -97,7 +116,15 @@ def post_drinks():
     returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the updated drink
         or appropriate status code indicating reason for failure
 '''
+@requires_auth(permission='patch:drinks')
+@app.route('/drinks/<int:id>', methods=['PATCH'])
+def patch_drink(drink_id):
+    drink = Drink.query.get(drink_id)
 
+    if not drink:
+        abort(404)
+
+    
 
 '''
 @TODO implement endpoint
