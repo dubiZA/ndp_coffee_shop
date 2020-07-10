@@ -1,6 +1,6 @@
-# Coffee Shop Full Stack
+# Uda-Spice Latte Cafe Project
 
-## Full Stack Nano - IAM Final Project
+## IAM Final Project
 
 Udacity has decided to open a new digitally enabled cafe for students to order drinks, socialize, and study hard. But they need help setting up their menu experience.
 
@@ -11,25 +11,19 @@ You have been called on to demonstrate your newly learned skills to create a ful
 3) Allow the shop baristas to see the recipe information.
 4) Allow the shop managers to create new drinks and edit existing drinks.
 
-## Tasks
+## Style Guide
 
-There are `@TODO` comments throughout the project. We recommend tackling the sections in order. Start by reading the READMEs in:
+The da-Spice Latte Cafe Project API backend is written with PEP 8 as the style guide. Google's yapf formatter was used to format the code. For consistency, code contributions should be formatted using yapf before being merged. It can be installed with `pip install yapf` or view the [GitHub repo](https://github.com/google/yapf). Use the ```bash --stype pep8``` switch.
 
-1. [`./backend/`](./backend/README.md)
-2. [`./frontend/`](./frontend/README.md)
 
-## About the Stack
+## Getting Started
 
-We started the full stack application for you. It is desiged with some key functional areas:
+Follow the directions in the README files for the two directories discussed below:
 
 ### Backend
-
-The `./backend` directory contains a partially completed Flask server with a pre-written SQLAlchemy module to simplify your data needs. You will need to complete the required endpoints, configure, and integrate Auth0 for authentication.
 
 [View the README.md within ./backend for more details.](./backend/README.md)
 
 ### Frontend
-
-The `./frontend` directory contains a complete Ionic frontend to consume the data from the Flask server. You will only need to update the environment variables found within (./frontend/src/environment/environment.ts) to reflect the Auth0 configuration details set up for the backend app. 
 
 [View the README.md within ./frontend for more details.](./frontend/README.md)
