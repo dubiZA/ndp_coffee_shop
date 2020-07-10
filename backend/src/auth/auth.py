@@ -146,7 +146,6 @@ def check_permissions(permission, payload):
 
 
 '''
-@TODO implement @requires_auth(permission) decorator method
     @INPUTS
         permission: string permission (i.e. 'post:drink')
 
