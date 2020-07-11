@@ -94,7 +94,7 @@ class Drink(db.Model):
         updates a new model into a database
         the model must exist in the database
         EXAMPLE
-            drink = Drink.query.filter(Drink.id == id).one_or_none()
+            drink = Drink.query.filter(Drink.id == id).one_or_none()    
             drink.title = 'Black Coffee'
             drink.update()
     '''
